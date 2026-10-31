@@ -1,0 +1,55 @@
+# What the platform provisions for this project.
+#
+# TWO FILES, AND NO FIELD IN BOTH. This one holds DEPLOY-TIME facts — what to
+# build, how big, what it may reach. Each target's Python MANIFEST holds RUNTIME
+# behaviour — its model, its tools, what it may do without asking. They are
+# checked against each other on every deploy, in both directions.
+apiVersion: elan.dev/v1
+kind: Project
+
+tenant: rsl
+project: deep-research
+
+source:
+  repo: https://github.com/open-elan/deep-search-agent
+  # REWRITTEN BY `elan deploy`, which resolves your branch to a commit and puts
+  # the sha here before submitting — so a deployment is reproducible from this
+  # file alone. All zeroes until the first deploy.
+  ref: "0000000000000000000000000000000000000000"
+  # Must contain agents/<name>/agent.py and workflows/<name>/workflow.py.
+  targetsRoot: .
+  runtime: python3.12
+
+defaults:
+  # Every target inherits these and may override any of them. Autopilot bills a
+  # 250m / 512Mi floor whatever you ask for, so asking for less saves nothing.
+  resources: {cpu: "500m", memory: "1Gi"}
+  scaling: {minReplicas: 0, maxReplicas: 3}
+  llm:
+    # Every target's MANIFEST.model must be one of these. The list also decides
+    # which provider hosts your agents can reach at all — the egress allowlist
+    # is derived from it — so a model missing here fails as a refused
+    # connection naming the hostname.
+    models: [gemini-flash-latest]
+    # provider -> a name within YOUR OWN secrets, set with `elan secret set`.
+    # Not a Secret Manager id: the platform prefixes it with your tenant. The
+    # variable it arrives under is ours to choose (GOOGLE_API_KEY), because
+    # those names sit under reserved prefixes.
+    keys:
+      google: default
+  # THIRD PARTIES YOUR TOOLS CALL. Default-deny: anything not listed here is
+  # refused at the proxy by hostname. Your model providers are added
+  # automatically from `llm.models` above — you should not have to know which
+  # hostname a model lives on.
+  egress: []
+
+# Every agent and workflow in this repo, by slug. The set here must equal the
+# set the repo actually contains — in both directions, checked on every deploy.
+# `elan new` writes both halves so they cannot drift.
+targets:
+
+  deep-research:
+    # Takes every value from `defaults:` above. Override any block
+    # here — a block replaces the default entirely rather than
+    # merging field by field, so state all of it or none of it.
+    database: {enabled: true}

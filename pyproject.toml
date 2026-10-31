@@ -1,0 +1,11 @@
+# Installed with `uv pip install` on top of the platform runtime image, so it
+# only needs what the image lacks. Never list agentkit-* here.
+[project]
+name = "deep-research"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    # The runtime image ships certifi 2026.7.22, which the deploy scan refuses
+    # (GHSA-6q48-6c7w-9gw2). Drop this once the platform base image is upgraded.
+    "certifi>=2026.10.18",
+]
