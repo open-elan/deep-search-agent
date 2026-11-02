@@ -8,14 +8,14 @@ apiVersion: elan.dev/v1
 kind: Project
 
 tenant: rsl
-project: deep-research
+project: deep-search
 
 source:
   repo: https://github.com/open-elan/deep-search-agent
   # REWRITTEN BY `elan deploy`, which resolves your branch to a commit and puts
   # the sha here before submitting — so a deployment is reproducible from this
   # file alone. All zeroes until the first deploy.
-  ref: "0000000000000000000000000000000000000000"
+  ref: "fda9cf3d4eae7fbea760c35ced587ff7fa648bae"
   # Must contain agents/<name>/agent.py and workflows/<name>/workflow.py.
   targetsRoot: .
   runtime: python3.12
@@ -58,4 +58,4 @@ targets:
     # Takes every value from `defaults:` above. Override any block
     # here — a block replaces the default entirely rather than
     # merging field by field, so state all of it or none of it.
-  deployment: {runtime: shared, group: search}
+    deployment: {runtime: shared, group: search}
