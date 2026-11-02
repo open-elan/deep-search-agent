@@ -15,7 +15,7 @@ source:
   # REWRITTEN BY `elan deploy`, which resolves your branch to a commit and puts
   # the sha here before submitting — so a deployment is reproducible from this
   # file alone. All zeroes until the first deploy.
-  ref: "fda9cf3d4eae7fbea760c35ced587ff7fa648bae"
+  ref: "a7870295f9b066fb8f1f6e9badf9d07c3d03c11d"
   # Must contain agents/<name>/agent.py and workflows/<name>/workflow.py.
   targetsRoot: .
   runtime: python3.12
@@ -54,7 +54,7 @@ groups:
 # `elan new` writes both halves so they cannot drift.
 targets:
 
-  deep-research:
+  deep-search:
     # Takes every value from `defaults:` above. Override any block
     # here — a block replaces the default entirely rather than
     # merging field by field, so state all of it or none of it.
