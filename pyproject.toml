@@ -1,7 +1,7 @@
 # Installed with `uv pip install` on top of the platform runtime image, so it
 # only needs what the image lacks. Never list agentkit-* here.
 [project]
-name = "deep-research"
+name = "deep-search"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [

@@ -104,7 +104,7 @@ elan secret set llm default --from-file key.txt   # the Gemini key, once per ten
 # set source.repo in elan.yaml to your repository, then:
 git push          # elan deploy builds the REMOTE commit, not your disk
 elan deploy
-elan invoke deep-research --text "Research the state of solid-state batteries"
+elan invoke deep-search --text "Research the state of solid-state batteries"
 ```
 
 ## The two files, and why there are two
