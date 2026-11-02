@@ -43,6 +43,12 @@ defaults:
   # hostname a model lives on.
   egress: []
 
+groups:
+  search:
+    resources: {cpu: "400m", memory: "512Mi"}
+    scaling:   {minReplicas: 0, maxReplicas: 3}
+    database:  {enabled: true}
+
 # Every agent and workflow in this repo, by slug. The set here must equal the
 # set the repo actually contains — in both directions, checked on every deploy.
 # `elan new` writes both halves so they cannot drift.
@@ -52,4 +58,4 @@ targets:
     # Takes every value from `defaults:` above. Override any block
     # here — a block replaces the default entirely rather than
     # merging field by field, so state all of it or none of it.
-    database: {enabled: true}
+  deployment: {runtime: shared, group: search}
